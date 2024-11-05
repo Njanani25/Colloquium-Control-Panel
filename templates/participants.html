@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Admin</title>
+    <style>
+        /* General Body Styles */
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            color: #003049;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #004e89;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        h1 {
+            margin: 0;
+            font-weight: bolder;
+        }
+
+        .form-container {
+            margin: 30px;
+            background-color: #f1faee;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container label {
+            font-weight: bolder;
+            margin-bottom: 10px;
+            color: #003049;
+        }
+
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #003049;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #003049;
+            color: #f1faee;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #005a8d;
+        }
+
+        .table-container {
+            margin: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #003049;
+            color: #f1faee;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #003049;
+            text-align: center;
+        }
+
+        th {
+            color: #003049;
+        }
+
+        tr:nth-child(even) {
+            background-color: #e9f5ff;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .download-button {
+            margin-top: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="back-button" onclick="window.history.back()">Back</button>
+        <h1>Event Participants Information</h1>
+    </header>
+
+    <div class="form-container">
+        <form method="post">
+            <label for="event-select">Get Event Information</label>
+            <select id="event-select" name="Event">
+                <option selected>Select Event</option>
+                {% for event in events %}
+                <option value="{{ event[0] }}">{{ event[1] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Extract</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Participant ID</th>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for par in participants %}
+                <tr>
+                    <td>{{ par[0] }}</td>
+                    <td>{{ par[1] }}</td>
+                    <td>{{ par[2] }}</td>
+                    <td>{{ par[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if participants %}
+        <button class="download-button" onclick="window.location.href='/download-participants?event={{ selected_event }}'">Download Sheet</button>
+        {% endif %}
+       
+    </div>
+</body>
+</html>

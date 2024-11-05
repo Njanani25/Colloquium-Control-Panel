@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Information</title>
+    <style>
+        body {
+            background-color: #fce4ec; /* Updated background color */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #283593;
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .back-button {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #c2185b;
+            transform: scale(1.05);
+        }
+
+        main {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .event-category {
+            margin: 20px 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        .event-category h2 {
+            color: #283593;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #283593;
+            padding-bottom: 5px;
+        }
+
+        .event-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .event-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            padding: 20px;
+            border: 1px solid #e91e63;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .event-header {
+            background-color: #283593;
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .event-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .event-body {
+            padding: 20px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .event-detail {
+            border-bottom: 1px solid #d1d1d1;
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .event-detail:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #283593;
+        }
+
+        .detail-value {
+            color: #666666;
+        }
+
+        .event-footer {
+            background-color: #f3e5f5;
+            color: #283593;
+            padding: 10px;
+            text-align: center;
+            border-top: 4px solid #e91e63;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .back-button {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .event-header h3 {
+                font-size: 1.2rem;
+            }
+
+            .event-detail {
+                font-size: 0.9rem;
+            }
+
+            .event-container {
+                grid-template-columns: 1fr; /* One event per row on small screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Event Information</h1>
+        <button class="back-button" onclick="window.history.back()">Back</button>
+    </header>
+    <main>
+        <div class="event-category">
+            <h2>Technical Events</h2>
+            <div class="event-container">
+                {% for event in events %}
+                {% if event[7] == 'Technical' %}
+                <div class="event-card">
+                    <div class="event-header">
+                        <h3>{{event[3]}}</h3>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-detail">
+                            <span class="detail-label">Venue:</span>
+                            <span class="detail-value">{{event[8]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Date:</span>
+                            <span class="detail-value">{{event[6]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Registration Fee:</span>
+                            <span class="detail-value">&#8377;{{event[4]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Current Participants:</span>
+                            <span class="detail-value">{{event[9]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Max Participants:</span>
+                            <span class="detail-value">{{event[5]}}</span>
+                        </div>
+                    </div>
+                    <div class="event-footer"></div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="event-category">
+            <h2>Non-Technical Events</h2>
+            <div class="event-container">
+                {% for event in events %}
+                {% if event[7] == 'Non-Technical' %}
+                <div class="event-card">
+                    <div class="event-header">
+                        <h3>{{event[3]}}</h3>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-detail">
+                            <span class="detail-label">Venue:</span>
+                            <span class="detail-value">{{event[8]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Date:</span>
+                            <span class="detail-value">{{event[6]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Registration Fee:</span>
+                            <span class="detail-value">&#8377;{{event[4]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Current Participants:</span>
+                            <span class="detail-value">{{event[9]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Max Participants:</span>
+                            <span class="detail-value">{{event[5]}}</span>
+                        </div>
+                    </div>
+                    <div class="event-footer"></div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="event-category">
+            <h2>Cultural Events</h2>
+            <div class="event-container">
+                {% for event in events %}
+                {% if event[7] == 'Cultural' %}
+                <div class="event-card">
+                    <div class="event-header">
+                        <h3>{{event[3]}}</h3>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-detail">
+                            <span class="detail-label">Venue:</span>
+                            <span class="detail-value">{{event[8]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Date:</span>
+                            <span class="detail-value">{{event[6]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Registration Fee:</span>
+                            <span class="detail-value">&#8377;{{event[4]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Current Participants:</span>
+                            <span class="detail-value">{{event[9]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Max Participants:</span>
+                            <span class="detail-value">{{event[5]}}</span>
+                        </div>
+                    </div>
+                    <div class="event-footer"></div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="event-category">
+            <h2>Workshops</h2>
+            <div class="event-container">
+                {% for event in events %}
+                {% if event[7] == 'Workshop' %}
+                <div class="event-card">
+                    <div class="event-header">
+                        <h3>{{event[3]}}</h3>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-detail">
+                            <span class="detail-label">Venue:</span>
+                            <span class="detail-value">{{event[8]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Date:</span>
+                            <span class="detail-value">{{event[6]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Registration Fee:</span>
+                            <span class="detail-value">&#8377;{{event[4]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Current Participants:</span>
+                            <span class="detail-value">{{event[9]}}</span>
+                        </div>
+                        <div class="event-detail">
+                            <span class="detail-label">Max Participants:</span>
+                            <span class="detail-value">{{event[5]}}</span>
+                        </div>
+                    </div>
+                    <div class="event-footer"></div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

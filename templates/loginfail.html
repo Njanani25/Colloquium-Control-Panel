@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Management System</title>
+    <!--<link rel="stylesheet" href="loginfail.css">-->
+    <style>
+      body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+}
+
+.navbar {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: inline-block;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.error-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.error-message {
+    max-width: 500px;
+    margin-right: 20px;
+}
+
+.error-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #d9534f;
+}
+
+.btn-try-again {
+    background-color: #5bc0de;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-try-again:hover {
+    background-color: #31b0d5;
+    transform: scale(1.05);
+}
+
+.error-image {
+    max-width: 500px;
+    margin-left: 20px;
+}
+
+.error-image img {
+    border: 5px solid #0a9396;
+    border-radius: 35px;
+    width: 100%;
+    height: auto;
+}
+
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a class="navbar-brand" href="#">Event Management System</a>
+      <a class="btn btn-primary" href="/admin">Admin Login</a>
+    </nav>
+    <div class="error-content">
+      <div class="error-message">
+        {% for error in errors %}
+        <div class="error-text">{{error}}</div>
+        {% endfor %}
+        <a href="/" class="btn btn-try-again">Try Again</a>
+      </div>
+      <div class="error-image">
+        <img src="../static/images/tryagain2.jpg" alt="Try Again" />
+      </div>
+    </div>
+  </body>
+</html>

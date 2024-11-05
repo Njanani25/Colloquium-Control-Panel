@@ -1,0 +1,190 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fce4ec; 
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: #283593;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .back-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #c2185b;
+        }
+        .container {
+            width: 400px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        h2 {
+            color: #283593;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        label {
+            display: block;
+            color: #283593;
+            text-align: left;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+            border-color: #e91e63;
+            outline: none;
+            box-shadow: 0 0 5px rgba(233, 30, 99, 0.5);
+        }
+        input[type="submit"] {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #c2185b;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e0f7fa;
+            border: 2px solid #00acc1;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        #result h3 {
+            color: #00796b;
+            margin-bottom: 10px;
+        }
+        #result a {
+            color: #e91e63;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            padding: 8px 12px;
+            border: 2px solid #e91e63;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        #result a:hover {
+            background-color: #e91e63;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Feedback Form
+        <button class="back-button" onclick="window.history.back()">Back</button>
+    </div>
+    <div class="container">
+        <h2>We Value Your Feedback</h2>
+        <form id="feedback-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="feedback">Feedback:</label>
+            <textarea id="feedback" name="feedback" rows="4" required></textarea>
+
+            <input type="submit" value="Submit Feedback">
+        </form>
+      
+        <div id="result">
+            <h3>Your feedback has been received!</h3>
+            <a href="#" id="download-link">Download Certificate</a>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('feedback-form').onsubmit = function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch('/feedback_form', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `
+                    <h3>${data.message}</h3>
+                    <a href="/download-certificate?name=${data.name}" target="_blank">Download Certificate</a>
+                `;
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('feedback-form').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was a problem with your submission. Please try again.');
+            });
+        };
+           
+    </script>
+</body>
+</html>
